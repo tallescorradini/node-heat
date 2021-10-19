@@ -1,4 +1,5 @@
 import axios from "axios";
+import { sign } from "jsonwebtoken";
 
 import prismaClient from "../prisma";
 
@@ -63,7 +64,22 @@ class AuthenticateUserService {
       });
     }
 
-    return response.data;
+    const token = sign(
+      {
+        user: {
+          name: user.name,
+          avatar_url: user.avatar_url,
+          id: user.id,
+        },
+      },
+      process.env.JWT_SECRET,
+      {
+        subject: user.id,
+        expiresIn: "1d",
+      }
+    );
+
+    return { token, user };
   }
 }
 
