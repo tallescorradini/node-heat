@@ -2,12 +2,19 @@ import axios from "axios";
 
 // Get user code(string)
 // Retrieve github access_token
-// retrieve user info from github
+// Retrieve user info from github
 // Check if user exists on DB, y -> create toke, n -> add user
 // Return token with user information
 
 interface IAccessTokenResponse {
   access_token: string;
+}
+
+interface IUserResponse {
+  avatar_url: string;
+  login: string;
+  id: number;
+  name: string;
 }
 
 class AuthenticateUserService {
@@ -26,7 +33,16 @@ class AuthenticateUserService {
         },
       });
 
-    return accessTokenResponse;
+    const response = await axios.get<IUserResponse>(
+      "https://api.github.com/user",
+      {
+        headers: {
+          authorization: `Bearer ${accessTokenResponse.access_token}`,
+        },
+      }
+    );
+
+    return response.data;
   }
 }
 
