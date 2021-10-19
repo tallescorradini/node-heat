@@ -3,12 +3,6 @@ import { sign } from "jsonwebtoken";
 
 import prismaClient from "../prisma";
 
-// Get user code(string)
-// Retrieve github access_token
-// Retrieve user info from github
-// Check if user exists on DB, y -> create toke, n -> add user
-// Return token with user information
-
 interface IAccessTokenResponse {
   access_token: string;
 }
