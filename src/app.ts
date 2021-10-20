@@ -33,7 +33,7 @@ app.get("/github", (req, res) => {
 
 app.get("/signin/callback", (req, res) => {
   const { code } = req.query;
-  return res.json(code);
+  return res.redirect(`http://localhost:3000/?code=${code}`);
 });
 
 export { serverHttp, io };
